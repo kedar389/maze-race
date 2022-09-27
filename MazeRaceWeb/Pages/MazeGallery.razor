@@ -1,0 +1,108 @@
+﻿@page "/mazegallery"
+@using MazeRaceCore.Core.MazeGenerationAlgorithms
+@using MazeRaceBlazor.Partials
+
+
+<div class="maze-view">
+
+    <button class="btn btn-primary"
+            @onclick="() => {if (tokenSource != null){tokenSource.Cancel();} mazeSvg = MazeSvgRenderer.RenderMaze(generator.Generate(algoNames.ElementAt(currentIndex).Key)); StateHasChanged(); }">
+        New
+    </button>
+
+
+    <button class="btn btn-primary"
+            @onclick="async () => {if (tokenSource != null){tokenSource.Cancel();} tokenSource = new CancellationTokenSource(); await GenerateAsync(animationSpeed, tokenSource.Token);}">
+        Animate
+    </button>
+
+
+    <button class="btn btn-primary"
+            @onclick="() => { if (tokenSource != null){ tokenSource.Cancel(); mazeSvg = MazeSvgRenderer.RenderMaze(MazeGenerationAlgorithm.getUnconnectedMaze(generator.Size, generator.Size));} }">
+        Reset
+    </button>
+
+
+    <div>
+        <label>Animation Speed:</label>
+        <select name="animationSpeed" @bind="animationSpeed">
+            <option value="200" selected>Slow</option>
+            <option value="25">Fast</option>
+        </select>
+    </div>
+
+
+    <div class="maze-container">
+
+        <p>@algoNames[algoNames.ElementAt(currentIndex).Key]</p>
+
+        @((MarkupString) mazeSvg)
+
+        <div class="maze-preview-controls">
+            <button class="btn btn-primary" @onclick="() => {if (tokenSource != null){tokenSource.Cancel();} ChangeIndex(-1); }"> Previous </button>
+
+            <button class="btn btn-primary" @onclick="() => {if (tokenSource != null){tokenSource.Cancel();} ChangeIndex(1); }">Next</button>
+        </div>
+
+    </div>
+</div>
+
+
+@code {
+
+    MazeGenerator generator;
+    string mazeSvg;
+    private int currentIndex;
+    private Dictionary<string, string> algoNames;
+    CancellationTokenSource? tokenSource;
+    int animationSpeed = 200;
+
+
+    protected override void OnInitialized()
+    {
+        generator = new MazeGenerator();
+        generator.Size = 15;
+        algoNames = new Dictionary<string, string>();
+        algoNames.Add("aldousbroder", "Aldous - Broder");
+        algoNames.Add("backtracker", "Backtracker");
+        algoNames.Add("binarytree", "Binary Tree");
+        algoNames.Add("growingtree", "Growing Tree");
+        algoNames.Add("prim", "Prim");
+        algoNames.Add("sidewinder", "Sidewinder");
+        mazeSvg = MazeSvgRenderer.RenderMaze(generator.Generate(algoNames.ElementAt(currentIndex).Key));
+        tokenSource = null;
+    }
+
+
+    private void ChangeIndex(int change)
+    {
+        currentIndex += change;
+        currentIndex = currentIndex < 0 ? algoNames.Count - 1 : currentIndex >= algoNames.Count ? 0 : currentIndex;
+
+        mazeSvg = MazeSvgRenderer.RenderMaze(generator.Generate(algoNames.ElementAt(currentIndex).Key));
+        StateHasChanged();
+    }
+
+
+    //TODO refractor
+    private async Task GenerateAsync(int delay, CancellationToken token)
+    {
+        await Task.Run(async () =>
+        {
+            var maze = MazeGenerationAlgorithm.getUnconnectedMaze(10, 10);
+            var steps = generator.GenerateSteps(algoNames.ElementAt(currentIndex).Key);
+
+            while (steps.Count > 0)
+            {
+                await Task.Delay(delay, token);
+                var cell1 = maze[steps[0].Item1.Item1, steps[0].Item1.Item2];
+                var cell2 = maze[steps[0].Item2.Item1, steps[0].Item2.Item2];
+                MazeGenerationAlgorithm.RemoveWalls(cell2, cell1);
+                steps.RemoveAt(0);
+                mazeSvg = MazeSvgRenderer.RenderMaze(maze);
+                InvokeAsync(() => StateHasChanged());
+            }
+        }, token);
+    }
+
+}

@@ -1,0 +1,51 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">MazeRaceWeb</a>
+        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="mazerace" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Maze Race
+            </NavLink>
+        </div>
+
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="scoreboard">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Scoreboard
+            </NavLink>
+        </div>
+
+
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="mazegallery">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Maze Gallery
+            </NavLink>
+        </div>
+        
+        
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="comments">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Comments
+            </NavLink>
+        </div>
+    </nav>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+}

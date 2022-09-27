@@ -1,0 +1,108 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = MazeRaceWeb
+build_property.RootNamespace = MazeRaceWeb
+build_property.ProjectDir = C:\Users\RADEK_RYZEN\source\repos\MazeRace\dotnet-5996\MazeRaceWeb\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\RADEK_RYZEN\source\repos\MazeRace\dotnet-5996\MazeRaceWeb
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/RADEK_RYZEN/source/repos/MazeRace/dotnet-5996/MazeRaceWeb/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/RADEK_RYZEN/source/repos/MazeRace/dotnet-5996/MazeRaceWeb/Pages/MazeRace.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF6ZVJhY2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/RADEK_RYZEN/source/repos/MazeRace/dotnet-5996/MazeRaceWeb/Shared/LoginDisplay.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXExvZ2luRGlzcGxheS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/RADEK_RYZEN/source/repos/MazeRace/dotnet-5996/MazeRaceWeb/Shared/SurveyPrompt.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/RADEK_RYZEN/source/repos/MazeRace/dotnet-5996/MazeRaceWeb/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/RADEK_RYZEN/source/repos/MazeRace/dotnet-5996/MazeRaceWeb/Pages/Comments.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tbWVudHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-uf7v5hlhw5
+
+[C:/Users/RADEK_RYZEN/source/repos/MazeRace/dotnet-5996/MazeRaceWeb/Pages/MazeGallery.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWF6ZUdhbGxlcnkucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-7e0hrpoz7w
+
+[C:/Users/RADEK_RYZEN/source/repos/MazeRace/dotnet-5996/MazeRaceWeb/Pages/Scoreboard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2NvcmVib2FyZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-gp4q2m4zgz
+
+[C:/Users/RADEK_RYZEN/source/repos/MazeRace/dotnet-5996/MazeRaceWeb/Shared/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-a9vekcgsf1
+
+[C:/Users/RADEK_RYZEN/source/repos/MazeRace/dotnet-5996/MazeRaceWeb/Shared/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-f52xwuox21
+
+[C:/Users/RADEK_RYZEN/source/repos/MazeRace/dotnet-5996/MazeRaceWeb/Areas/Identity/Pages/Account/LogOut.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dPdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/RADEK_RYZEN/source/repos/MazeRace/dotnet-5996/MazeRaceWeb/Areas/Identity/Pages/Account/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/RADEK_RYZEN/source/repos/MazeRace/dotnet-5996/MazeRaceWeb/Areas/Identity/Pages/Account/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxfVmlld0ltcG9ydHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/RADEK_RYZEN/source/repos/MazeRace/dotnet-5996/MazeRaceWeb/Areas/Identity/Pages/Shared/_LoginPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/RADEK_RYZEN/source/repos/MazeRace/dotnet-5996/MazeRaceWeb/Areas/Identity/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/RADEK_RYZEN/source/repos/MazeRace/dotnet-5996/MazeRaceWeb/Areas/Identity/Pages/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/RADEK_RYZEN/source/repos/MazeRace/dotnet-5996/MazeRaceWeb/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/RADEK_RYZEN/source/repos/MazeRace/dotnet-5996/MazeRaceWeb/Pages/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/RADEK_RYZEN/source/repos/MazeRace/dotnet-5996/MazeRaceWeb/Pages/Shared/_LoginPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/RADEK_RYZEN/source/repos/MazeRace/dotnet-5996/MazeRaceWeb/Pages/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/RADEK_RYZEN/source/repos/MazeRace/dotnet-5996/MazeRaceWeb/Pages/_Host.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/RADEK_RYZEN/source/repos/MazeRace/dotnet-5996/MazeRaceWeb/Pages/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0xheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/RADEK_RYZEN/source/repos/MazeRace/dotnet-5996/MazeRaceWeb/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 

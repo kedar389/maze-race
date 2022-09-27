@@ -1,0 +1,92 @@
+﻿@page "/comments"
+@using MazeRaceCore.Entity
+@using MazeRaceCore.Service
+@using System.Media
+@inject CommentServiceEf _commentService
+
+
+<h3>Comments</h3>
+
+<label for="sortby">Sort By:</label>
+<select name="sortby" id="sortby" @onchange="e => { _sortby = e.Value?.ToString() ?? string.Empty; _offset = 0; _comments = LoadComments(); }">
+    <option value="best">Best</option>
+    <option value="newest">Newest</option>
+</select>
+
+
+
+
+
+<div><input type="text"  @bind="text"></div>
+<button class="btn btn-primary" disabled="@(authState == null || !authState.User.Identity.IsAuthenticated || text.Length == 0 )" @onclick="() => {_commentService.AddComment(new Comment{Player = authState.User.Identity.Name
+,CommentText = text,PublishedAt = DateTime.Now,NumberOfLikes = 0});  _comments = LoadComments(); }"> Post </button>
+
+
+<div class="comments">
+    @for (var x = 0; x < 10; x++)
+    {
+        if (_comments.Count > x)
+        {
+            <p>Username: @_comments[x].Player                   Date: @_comments[x].PublishedAt</p>
+            <p>             @_comments[x].CommentText</p>
+        }
+    }
+</div>
+
+
+
+
+
+
+<div>
+    <div class="table-controls">
+        <button class="btn btn-primary" disabled="@(!(_offset - 10 >= 0))" @onclick="() => { GetAnotherEntries(-10); }"> Previous </button>
+
+        <button class="btn btn-primary" disabled="@(!(_commentService.GetTopComments(10, _offset + 10).Count > 0))"
+                @onclick="() => { GetAnotherEntries(10); }">
+            Next
+        </button>
+    </div>
+    
+
+</div>
+
+
+
+@code {
+    int _offset;
+    string _sortby = string.Empty;
+    private IList<Comment> _comments = new List<Comment>();
+    string text;
+
+    [CascadingParameter]
+    private Task<AuthenticationState>_authState { get; set; }
+
+    private AuthenticationState authState;
+
+    protected override async void OnInitialized()
+    {
+        text = "";
+        _sortby = "best";
+        _offset = 0;
+        _comments = _commentService.GetTopComments(10, _offset);
+        authState = await _authState;
+
+    }
+
+    private void GetAnotherEntries(int offsetChange)
+    {
+        _offset += offsetChange;
+        _comments = LoadComments();
+    }
+
+    private IList<Comment> LoadComments()
+    {
+        if (_sortby.Equals("best"))
+        {
+            return _commentService.GetTopComments(10, _offset);
+        }
+
+        return _commentService.GetNewestComments(10, _offset);
+    }
+}

@@ -1,0 +1,113 @@
+﻿@page "/scoreboard"
+@using MazeRaceCore.Service
+@using MazeRaceCore.Entity
+@inject ScoreServiceEf _scoreService
+
+
+<style>
+    html,
+    body { height: 100%; }
+
+    body {
+        background: linear-gradient(45deg, #49a09d, #5f2c82);
+        font-family: sans-serif;
+        font-weight: 100;
+        margin: 0;
+    }
+</style>
+
+
+<div class="table-design">
+
+    <div class="box">
+        <label for="modes">Choose Mode:</label>
+        <select name="modes" id="modes" @onchange="e => { _mode = e.Value?.ToString() ?? string.Empty; _offset = 0; _scores = LoadScores(); }">
+            <option value="endless">Endless</option>
+            <option value="rush">Rush</option>
+        </select>
+
+        <label for="sortby">Sort By:</label>
+        <select name="sortby" id="sortby" @onchange="e => { _sortby = e.Value?.ToString() ?? string.Empty; _offset = 0; _scores = LoadScores(); }">
+            <option value="best">Best</option>
+            <option value="newest">Newest</option>
+        </select>
+    </div>
+
+
+    <table>
+        <thead>
+        <tr>
+            <th>Player</th>
+            <th>Date</th>
+            <th>Mode</th>
+            <th>Score</th>
+        </tr>
+        </thead>
+        <tbody>
+        @for (var x = 0; x < 10; x++)
+        {
+            if (_scores.Count > x)
+            {
+                <tr>
+                    <td>@_scores[x].Player</td>
+                    <td>@_scores[x].PlayedAt</td>
+                    <td>@_scores[x].Mode</td>
+                    <td>@_scores[x].Points</td>
+                </tr>
+            }
+
+            else
+            {
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+
+    <div class="table-controls">
+        <button class="btn btn-primary" disabled="@(!(_offset - 10 >= 0))" @onclick="() => { GetAnotherEntries(-10); }"> Previous </button>
+
+        <button class="btn btn-primary" disabled="@(!(_scoreService.GetTopScores(10, _offset + 10, _mode).Count > 0))"
+                @onclick="() => { GetAnotherEntries(10); }">
+            Next
+        </button>
+    </div>
+</div>
+
+
+@code {
+    int _offset;
+    string _mode = string.Empty;
+    string _sortby = string.Empty;
+    private IList<Score> _scores = new List<Score>();
+
+    protected override void OnInitialized()
+    {
+        _mode = "endless";
+        _sortby = "best";
+        _offset = 0;
+        _scores = _scoreService.GetTopScores(10, _offset, _mode);
+    }
+
+    private void GetAnotherEntries(int offsetChange)
+    {
+        _offset += offsetChange;
+        _scores = LoadScores();
+    }
+
+    private IList<Score> LoadScores()
+    {
+        if (_sortby.Equals("best"))
+        {
+            return _scoreService.GetTopScores(10, _offset, _mode);
+        }
+
+        return _scoreService.GetNewestScores(10, _offset, _mode);
+    }
+
+}

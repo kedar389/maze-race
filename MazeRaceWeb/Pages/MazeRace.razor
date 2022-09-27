@@ -1,0 +1,291 @@
+﻿@page "/mazerace"
+@using MazeRaceCore.Service
+@using MazeRaceCore.Core.GameModes
+@using MazeRaceCore.Core.MazeGenerationAlgorithms
+@using MazeRaceCore.Entity
+@using MazeRaceCore.Core
+@using MazeRaceBlazor.Partials
+@inject ScoreServiceEf _scoreService
+
+
+<div>
+    <input type="radio" name="Mode" value="endless" checked="checked" @onclick='() => { _mode = "Endless"; }'/>
+    <label>Endless</label>
+    <input type="radio" name="Mode" value="rush" @onclick='() => { _mode = "Rush"; }'/>
+    <label>Rush</label>
+    <input type="radio" name="Mode" value="custom" @onclick='() => { _mode = "Custom"; }'/>
+    <label>Custom</label>
+</div>
+
+
+<div>
+    @if (_gameMode != null && (_gameMode.GetType() == typeof(Endless) || _gameMode.GetType() == typeof(Rush)))
+    {
+        <p>@_time</p>
+        <p>Score : @_score.ToString()</p>
+    }
+
+</div>
+
+
+@if (_mode == "Custom")
+{
+    <div>
+        <select name="racerCountSelect" id="racerCount" @bind="_racerCount">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+
+
+        <select name="levelCountSelect" id="levelCount" @bind="_levelCount">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+        </select>
+
+
+        @if (_levelCount > 0)
+        {
+            <select name="mazeType" id="mazeType" @onchange="e => { algos[0] = e.Value.ToString(); }">
+                <option value="aldousbroder">Aldous-Broder</option>
+                <option value="backtracker"> Backtracker</option>
+                <option value="binarytree">Binary Tree</option>
+                <option value="prim">Prim</option>
+                <option value="growingtree">Growing Tree</option>
+                <option value="sidewinder">Sidewinder</option>
+            </select>
+        }
+
+        @if (_levelCount > 1)
+        {
+            <select name="mazeType" id="mazeType" @onchange="e => { algos[1] = e.Value.ToString(); }">
+                <option value="aldousbroder">Aldous-Broder</option>
+                <option value="backtracker"> Backtracker</option>
+                <option value="binarytree">Binary Tree</option>
+                <option value="prim">Prim</option>
+                <option value="growingtree">Growing Tree</option>
+                <option value="sidewinder">Sidewinder</option>
+            </select>
+        }
+
+        @if (_levelCount > 2)
+        {
+            <select name="mazeType" id="mazeType" @onchange="e => { algos[2] = e.Value.ToString(); }">
+                <option value="aldousbroder">Aldous-Broder</option>
+                <option value="backtracker"> Backtracker</option>
+                <option value="binarytree">Binary Tree</option>
+                <option value="prim">Prim</option>
+                <option value="growingtree">Growing Tree</option>
+                <option value="sidewinder">Sidewinder</option>
+            </select>
+        }
+
+        @if (_levelCount > 3)
+        {
+            <select name="mazeType" id="mazeType" @onchange="e => { algos[3] = e.Value.ToString(); }">
+                <option value="aldousbroder">Aldous-Broder</option>
+                <option value="backtracker"> Backtracker</option>
+                <option value="binarytree">Binary Tree</option>
+                <option value="prim">Prim</option>
+                <option value="growingtree">Growing Tree</option>
+                <option value="sidewinder">Sidewinder</option>
+            </select>
+        }
+    </div>
+}
+
+
+<div class="col">
+    <div class="maze-container" tabindex="0" @onkeydown="OnKeyDown">
+        @((MarkupString) _mazeRender)
+    </div>
+</div>
+
+
+<div class="row controls">
+    <button class="btn btn-primary" @onclick="() => {if (tokenSource != null){tokenSource.Cancel();} startGame();_mazeRender = MazeSvgRenderer.RenderGame(_gameMode); StateHasChanged(); }">Start Game</button>
+</div>
+
+
+<div class="row">
+    <div class="controls">
+        <button class="btn btn-primary" @onclick="() =>{TryToMove(Walls.Left); StateHasChanged(); }">←</button>
+        <button class="btn btn-primary" @onclick="() =>{TryToMove(Walls.Right); StateHasChanged(); }">→</button>
+        <button class="btn btn-primary" @onclick="() =>{TryToMove(Walls.Top); StateHasChanged(); }">↑</button>
+        <button class="btn btn-primary" @onclick="() =>{TryToMove(Walls.Bottom); StateHasChanged(); }">↓</button>
+    </div>
+</div>
+
+
+@switch (_mode)
+{
+    case "Endless":
+        <div class="alert alert-dismissible alert-secondary">
+            <strong>Rules:</strong>
+            You are the blue square. Navigate the maze to make it to the end which is represented by black square.
+            Keyboard inputs (←, →, ↑, ↓) are supported if you <i>click on the board</i>.
+        </div>
+        break;
+
+
+    case "Custom":
+        <div class="alert alert-dismissible alert-secondary">
+            <strong>Rules:</strong>
+            You are the blue square. Navigate the maze to make it to the end in the bottom right.
+            You can customize your maze with layers, algorithms and number of player.
+            Keyboard inputs (←, →, ↑, ↓) are supported if you <i>click on the board</i>.
+        </div>
+        break;
+
+
+    case "Rush":
+        <div class="alert alert-dismissible alert-secondary">
+            <strong>Rules:</strong>
+            You are the blue square, and always start in the top left. Navigate the maze to make it to the end.
+            You have 20 seconds.Score is calculated on the distance from end of the maze.
+            Keyboard inputs (←, →, ↑, ↓) are supported if you <i>click on the board</i>.
+        </div>
+        break;
+}
+
+
+<style>
+    .controls { margin-top: 1rem; }
+
+    .controls button {
+        margin-bottom: .5rem;
+        margin-right: .5rem;
+    }
+</style>
+
+
+@code
+{
+    string _mode = "Endless";
+    GameMode _gameMode;
+    string _mazeRender = string.Empty;
+
+    string _time = string.Empty;
+    int _score;
+
+    int _racerCount;
+    int _levelCount;
+    string[] algos;
+    private AuthenticationState authState;
+
+    [CascadingParameter]
+    private Task<AuthenticationState>_authState { get; set; }
+
+    CancellationTokenSource? tokenSource;
+
+
+    protected override async void OnInitialized()
+    {
+        _mazeRender = MazeSvgRenderer.RenderMaze(MazeGenerationAlgorithm.getUnconnectedMaze(13, 13));
+        algos = new[] {"backtracker", "backtracker", "backtracker", "backtracker"};
+        authState = await _authState;
+        
+    }
+
+
+    void OnKeyDown(KeyboardEventArgs e)
+    {
+        switch (e.Key)
+        {
+            case "ArrowLeft":
+                TryToMove(Walls.Left);
+                break;
+            case "ArrowRight":
+                TryToMove(Walls.Right);
+                break;
+            case "ArrowUp":
+                TryToMove(Walls.Top);
+                break;
+            case "ArrowDown":
+                TryToMove(Walls.Bottom);
+                break;
+            default:
+                return;
+        }
+    }
+
+
+    void TryToMove(Walls move)
+    {
+        if (_gameMode != null && !_gameMode.IsFinished() && _gameMode.MovePlayer(move, "Player"))
+        {
+            _gameMode.UpdateGame("Player");
+            _mazeRender = MazeSvgRenderer.RenderGame(_gameMode);
+        }
+    }
+
+
+    async void startGame()
+    {
+        tokenSource = new CancellationTokenSource();
+        switch (_mode)
+        {
+            case "Endless":
+                _gameMode = new Endless();
+                await RunGame(tokenSource.Token);
+                break;
+
+            case "Rush":
+                _gameMode = new Rush();
+                await RunGame(tokenSource.Token);
+                break;
+
+            case "Custom":
+                _gameMode = new Custom(13, _racerCount, _levelCount, algos);
+                await RunGame(tokenSource.Token);
+                break;
+
+            default:
+                return;
+        }
+    }
+
+
+    async Task RunGame(CancellationToken token)
+    {
+        await Task.Run(async () =>
+        {
+            while (!_gameMode.IsFinished())
+            {
+                if (_gameMode.GetType() == typeof(Endless))
+                {
+                    var span = new TimeSpan(0, 0, ((Endless) _gameMode).Counter);
+                    _time = $"{(int) span.TotalMinutes}:{span.Seconds:00}";
+                    _score = ((Endless) _gameMode).Score;
+                }
+
+                if (_gameMode.GetType() == typeof(Rush))
+                {
+                    var span = new TimeSpan(0, 0, ((Rush) _gameMode).Counter);
+                    _time = $"{(int) span.TotalMinutes}:{span.Seconds:00}";
+                    _score = ((Rush) _gameMode).Score;
+                }
+
+
+                if (_gameMode.GetType() == typeof(Custom))
+                {
+                    ((Custom) _gameMode).AdvanceAi();
+                }
+
+                _mazeRender = MazeSvgRenderer.RenderGame(_gameMode);
+                InvokeAsync(() => StateHasChanged());
+                await Task.Delay(500,token);
+            }
+
+
+            if (_gameMode.GetType() == typeof(Endless) || _gameMode.GetType() == typeof(Rush) && authState != null && authState.User.Identity.IsAuthenticated)
+            {
+
+                var score = new Score(authState.User.Identity.Name, _score, _mode, DateTime.Now);
+                _scoreService.AddScore(score);
+            }
+        }, token);
+    }
+}
